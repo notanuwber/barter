@@ -55,7 +55,8 @@
         android:layout_alignParentStart="true"
         android:src="@mipmap/hammer"
         android:layout_toStartOf="@+id/imageView2"
-        android:scaleType="fitCenter" />
+        android:scaleType="fitCenter"
+        android:onClick="onButtonClick" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -67,7 +68,8 @@
         android:scaleType="fitCenter"
         android:layout_alignTop="@+id/imageView"
         android:layout_alignParentEnd="true"
-        android:layout_alignStart="@+id/imageView4" />
+        android:layout_alignStart="@+id/imageView4"
+        android:onClick="onButtonClick" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -77,7 +79,8 @@
         android:scaleType="fitCenter"
         android:layout_below="@+id/imageView"
         android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/imageView" />
+        android:layout_alignEnd="@+id/imageView"
+        android:onClick="onButtonClick" />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -88,6 +91,7 @@
         android:layout_alignTop="@+id/imageView3"
         android:layout_alignParentEnd="true"
         android:layout_alignEnd="@+id/search"
-        android:layout_toEndOf="@+id/myPost" />
+        android:layout_toEndOf="@+id/myPost"
+        android:onClick="onButtonClick" />
 
 </RelativeLayout>

@@ -32,7 +32,14 @@
         </activity>
         <activity android:name=".ui.MyPostActivity" >
         </activity>
-        <activity android:name=".ui.DetailActivity" >
+        <activity
+            android:name=".ui.DetailActivity" >
+            <intent-filter>
+
+                <action android:name="jsphdev.cmu.barter2.ui.DetailActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity android:name=".ui.EditMyPostActivity" >
         </activity>

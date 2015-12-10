@@ -44,6 +44,7 @@ public class EditMyPostActivity extends ActionBarActivity {
                 startActivity(submit);
             }
         });
+
     }
 
     public void update() {

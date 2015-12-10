@@ -17,5 +17,9 @@
     <string name="title_activity_signup">Sign Up</string>
     <string name="title_activity_my_account">MyAccountActivity</string>
     <string name="detail_text">Detail description of the post</string>
+    <string name="item_picture">Detail description of the post</string>
+
     <string name="title_activity_login">Sign in</string>
+
+    <string name="detail_description">%1$s</string>
 </resources>
