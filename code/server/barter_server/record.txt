@@ -10,6 +10,11 @@ VALUES (1, 'nan', '111111', "123-456-123", '@');
 SELECT * FROM USER WHERE NAME = 'nan' AND PASSWORD = '111111';
 
 
+INSERT INTO USER (NAME, PASSWORD, PHONE, EMAIL) VALUES('nan1', '111111', '321-321-321', '@');
+          + user.getName() + "', '" + user.getPassword() + "', '"
+          + user.getPhone() + "', '" + user.getEmail() + "';");
+
+DELETE FROM USER WHERE NAME = 'nan2'
 
 
 nan: LoginActivity, SignupActivity, MyAccountActivity

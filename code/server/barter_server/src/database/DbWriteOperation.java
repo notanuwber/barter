@@ -4,28 +4,25 @@ import java.sql.ResultSet;
 
 import jsphdev.cmu.barter2.entities.User;
 
-public class DbReadOperation extends DbOperation {
+public class DbWriteOperation extends DbOperation {
 
-  public User getUser(String email, String password) {
+  public User insertUser(User user) {
     initial();
 
-    ResultSet result = null;
+    int result = 0;
     try {
-      result = statement.executeQuery(
-          "SELECT * FROM USER "
-          + "WHERE EMAIL = '" + email + "' AND PASSWORD = '" + password + "';");
-      
-      if (!result.next()) {
+      String query = "INSERT INTO USER (NAME, PASSWORD, PHONE, EMAIL) VALUES('"
+          + user.getName() + "', '" + user.getPassword() + "', '"
+          + user.getPhone() + "', '" + user.getEmail() + "');";
+      result = statement.executeUpdate(query);
+   
+      if (result == 0) {
         terminate();
         return null;
       }
       
-      Integer id = result.getInt("ID");
-      String name = result.getString("NAME");
-      String mail = result.getString("EMAIL");
-      String phone = result.getString("PHONE");
-      User user = new User().setId(id).setName(name).setEmail(mail).setPhone(phone);
-      return user;
+      User insertedUser = getUser(user.getName());
+      return insertedUser;
     } catch (Exception e) {
       e.printStackTrace();
       return null;
@@ -48,7 +45,8 @@ public class DbReadOperation extends DbOperation {
       Integer id = result.getInt("ID");
       String email = result.getString("EMAIL");
       String phone = result.getString("PHONE");
-      User user = new User().setId(id).setName(name).setEmail(email).setPhone(phone);
+      String password = result.getString("PASSWORD");
+      User user = new User().setId(id).setName(name).setEmail(email).setPassword(password).setPhone(phone);
       return user;
     } catch (Exception e) {
       e.printStackTrace();

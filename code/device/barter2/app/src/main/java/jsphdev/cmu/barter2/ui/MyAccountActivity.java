@@ -30,7 +30,23 @@ public class MyAccountActivity extends ActionBarActivity {
             }
         });
 
+        Button logoutButton = (Button) findViewById(R.id.myAccount);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clearCurrentUser();
+                finish();
+            }
+        });
+
         User user = getCurrentUser();
+        if (user == null) {
+            Intent submit = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(submit);
+            finish();
+            return;
+        }
+
         TextView nameTextView = (TextView) findViewById(R.id.textViewNameInMyAccount);
         nameTextView.setText(user.getName());
 
@@ -44,8 +60,18 @@ public class MyAccountActivity extends ActionBarActivity {
     private User getCurrentUser() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String userJson = preferences.getString("CurrentUser", "");
+        if (userJson.isEmpty() || userJson.equals("")) {
+            return null;
+        }
+
         Gson gson = new Gson();
         User user = gson.fromJson(userJson, User.class);
         return user;
+    }
+
+    private void clearCurrentUser() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String userJson = preferences.getString("CurrentUser", "");
+        preferences.edit().clear().commit();
     }
 }

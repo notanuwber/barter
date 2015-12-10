@@ -5,9 +5,10 @@ public interface SocketServerConstants {
   boolean DEBUG = true;
 
   final int AUTHORITY = 1;
-  final int GET_LIST_BY_KEY_WORD = 2;
-  final int GET_LIST_BY_CATEGARY = 3;
-  final int CREATE_POST = 4;
-  final int UPDATE_POSTS = 5;
-  final int GET_USER_POSTS = 6;
+  final int SIGN_UP = 2;
+  final int SEARCH_BY_KEY_WORD = 3;
+  final int SEARCH_BY_CATEGARY = 4;
+  final int CREATE_NEW_ITEM = 5;
+  final int UPDATE_ITEM = 6;
+  final int GET_USER_POSTS = 7;
 }

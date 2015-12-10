@@ -9,11 +9,12 @@ public final class SocketClientConstants {
   public static  boolean DEBUG = true;
 
   public static final int AUTHORITY = 1;
-  public static final int SEARCH_BY_KEY_WORD = 2;
-  public static final int SEARCH_BY_CATEGARY = 3;
-  public static final int CREATE_NEW_ITEM = 4;
-  public static final int UPDATE_ITEM = 5;
-  public static final int GET_USER_POSTS = 6;
+  public static final int SIGN_UP = 2;
+  public static final int SEARCH_BY_KEY_WORD = 3;
+  public static final int SEARCH_BY_CATEGARY = 4;
+  public static final int CREATE_NEW_ITEM = 5;
+  public static final int UPDATE_ITEM = 6;
+  public static final int GET_USER_POSTS = 7;
 
   public static final String SERVER_ID_ADD = "10.0.2.2";
 }

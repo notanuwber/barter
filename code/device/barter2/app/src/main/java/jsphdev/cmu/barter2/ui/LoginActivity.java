@@ -1,5 +1,6 @@
 package jsphdev.cmu.barter2.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
@@ -20,10 +21,6 @@ import jsphdev.cmu.barter2.ws.remote.AuthorityTask;
  */
 public class LoginActivity extends ActionBarActivity {
 
-    private AuthorityTask authTask = null;
-    private TextView mEmailView;
-    private EditText mPasswordView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,12 +29,22 @@ public class LoginActivity extends ActionBarActivity {
         mEmailView = (TextView) findViewById(R.id.loginEmail);
         mPasswordView = (EditText) findViewById(R.id.loginPassword);
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.login);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        Button loginButton = (Button) findViewById(R.id.login);
+        loginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-				System.out.println("This is mEmailSignInButton click listener");
+                System.out.println("This is loginButton click listener");
                 attemptLogin();
+            }
+        });
+
+        Button signUpButtonInLogIn = (Button) findViewById(R.id.signUpButtonInLogIn);
+        signUpButtonInLogIn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("This is signUpButtonInLogIn click listener");
+                Intent submit = new Intent(view.getContext(), SignUpActivity.class);
+                startActivity(submit);
             }
         });
     }
@@ -64,7 +71,7 @@ public class LoginActivity extends ActionBarActivity {
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (!TextUtils.isEmpty(password) && !userProxy.isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -75,7 +82,7 @@ public class LoginActivity extends ActionBarActivity {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
-        } else if (!isEmailValid(email)) {
+        } else if (!userProxy.isEmailValid(email)) {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
@@ -96,12 +103,9 @@ public class LoginActivity extends ActionBarActivity {
         }
     }
 
-    private boolean isEmailValid(String email) {
-        return email.contains("@");
-    }
-
-    private boolean isPasswordValid(String password) {
-        return password.length() > 4;
-    }
+    private AuthorityTask authTask = null;
+    private TextView mEmailView;
+    private EditText mPasswordView;
+    private UserProxy userProxy = new UserProxy();
 }
 

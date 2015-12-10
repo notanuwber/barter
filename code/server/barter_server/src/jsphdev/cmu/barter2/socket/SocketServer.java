@@ -57,20 +57,33 @@ public class SocketServer extends Thread implements SocketServerConstants, Socke
         User userInDb = userProxy.authoritize(user.getEmail(), user.getPassword());
         writer.writeObject(userInDb);
         break;
-
-      case GET_LIST_BY_KEY_WORD:
+      
+      case SIGN_UP:
+        logger.log("get SIGN UP request");
+        User signUpUser = (User) reader.readObject();
+        User userWithSameName = userProxy.find(signUpUser.getName());
+        if (userWithSameName != null) {
+          writer.writeObject(null);
+          break;
+        }
+        
+        User newUser = userProxy.insert(signUpUser);
+        writer.writeObject(newUser);
+        break;
+        
+      case SEARCH_BY_KEY_WORD:
         logger.log("get GET_LIST_BY_KEY_WORD request");
         break;
 
-      case GET_LIST_BY_CATEGARY:
+      case SEARCH_BY_CATEGARY:
         logger.log("get GET_LIST_BY_CATEGARY request");
         break;
 
-      case CREATE_POST:
+      case CREATE_NEW_ITEM:
         logger.log("get CREATE_POST request");
         break;
 
-      case UPDATE_POSTS:
+      case UPDATE_ITEM:
         logger.log("get UPDATE_POSTS request");
         break;
 
