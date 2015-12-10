@@ -23,11 +23,12 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="My Account"
-        android:id="@+id/myAccount"
+        android:text="LOG OUT"
+        android:id="@+id/logout"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="false"
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -36,7 +37,8 @@
         android:id="@+id/myPost"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/myAccount"
-        android:layout_toEndOf="@+id/myAccount" />
+        android:layout_toEndOf="@+id/myAccount"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -52,8 +54,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/textViewNameInMyAccount"
         android:layout_alignTop="@+id/textViewNameTitleInMyAccount"
-        android:layout_toEndOf="@+id/myAccount"
-        android:layout_marginStart="51dp"
+        android:layout_toEndOf="@+id/myPost"
         android:text="XXXX" />
 
     <TextView
@@ -70,8 +71,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/textViewEmailInMyAccount"
         android:layout_alignBottom="@+id/textViewEmailTitle"
-        android:layout_alignStart="@+id/textViewNameInMyAccount"
-        android:text="XXXX" />
+        android:text="XXXX"
+        android:layout_toEndOf="@+id/myPost" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -87,7 +88,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/textViewPhoneInMyAccount"
         android:layout_alignTop="@+id/textViewPhoneTitle"
-        android:layout_alignStart="@+id/textViewEmailInMyAccount"
-        android:text="XXXX" />
+        android:text="XXXX"
+        android:layout_toEndOf="@+id/myPost" />
 
 </RelativeLayout>

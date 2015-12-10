@@ -34,15 +34,6 @@ public class HomePageActivity extends ActionBarActivity {
             }
         });
 
-        Button loginButton = (Button) findViewById(R.id.login);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent submit = new Intent(view.getContext(), LoginActivity.class);
-                startActivity(submit);
-            }
-        });
-
         EditText searchText = (EditText) findViewById(R.id.search);
     }
 }

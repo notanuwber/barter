@@ -11,6 +11,7 @@ import jsphdev.cmu.barter2.R;
 import jsphdev.cmu.barter2.adapter.itemProxy.ItemListProxy;
 import jsphdev.cmu.barter2.adapter.userProxy.UserProxy;
 import jsphdev.cmu.barter2.entities.User;
+import jsphdev.cmu.barter2.utility.SharedContent;
 import jsphdev.cmu.barter2.ws.remote.GetUserPostsTask;
 
 public class MyPostActivity extends ActionBarActivity {
@@ -19,6 +20,13 @@ public class MyPostActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_post);
+
+        User user = SharedContent.getCurrentUser(getApplicationContext());
+        if (user == null) {
+            Intent submit = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(submit);
+            return;
+        }
 
         Button myAccountButton = (Button) findViewById(R.id.myAccount);
         myAccountButton.setOnClickListener(new View.OnClickListener() {

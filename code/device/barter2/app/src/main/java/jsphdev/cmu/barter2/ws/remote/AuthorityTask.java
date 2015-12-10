@@ -1,14 +1,11 @@
 package jsphdev.cmu.barter2.ws.remote;
 
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
-
-import com.google.gson.Gson;
 
 import jsphdev.cmu.barter2.entities.User;
 import jsphdev.cmu.barter2.ui.LoginActivity;
 import jsphdev.cmu.barter2.utility.Logger;
+import jsphdev.cmu.barter2.utility.SharedContent;
 
 
 public class AuthorityTask extends AsyncTask<Void, Void, User> {
@@ -40,19 +37,10 @@ public class AuthorityTask extends AsyncTask<Void, Void, User> {
         }
 
         logger.log("authority ok");
-        updateCurrentUser(user);
+        SharedContent.updateCurrentUser(activity.getApplicationContext(), user);
 
         activity.finish();
         return;
-    }
-
-    private void updateCurrentUser(User user) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
-        SharedPreferences.Editor editor = preferences.edit();
-        Gson gson = new Gson();
-        String userJson = gson.toJson(user);
-        editor.putString("CurrentUser", userJson);
-        editor.commit();
     }
 
     private Logger logger;
