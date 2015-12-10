@@ -2,5 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="D:/app/jar/slf4j/slf4j-api/1.7.12/slf4j-api-1.7.12.jar"/>
+	<classpathentry kind="lib" path="D:/app/jar/HikariCP/2.4.3/HikariCP-2.4.3.jar" sourcepath="C:/Users/Nan/.m2/repository/com/zaxxer/HikariCP/2.4.3/HikariCP-2.4.3-sources.jar"/>
+	<classpathentry kind="lib" path="D:/app/jar/mysql-connector-java-5.1.37/mysql-connector-java-5.1.37-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
