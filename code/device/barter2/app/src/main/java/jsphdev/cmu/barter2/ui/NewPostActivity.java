@@ -15,7 +15,6 @@ import jsphdev.cmu.barter2.ws.remote.CreateNewItemTask;
 
 public class NewPostActivity extends ActionBarActivity {
 
-    private EditText titleText;
     private EditText detailText;
     private EditText priceText;
 
@@ -54,7 +53,6 @@ public class NewPostActivity extends ActionBarActivity {
             }
         });
 
-        titleText = (EditText) findViewById(R.id.title);
         detailText = (EditText) findViewById(R.id.description);
         priceText = (EditText) findViewById(R.id.price);
 
@@ -70,18 +68,10 @@ public class NewPostActivity extends ActionBarActivity {
 
     public void post() {
 
-        String title = titleText.getText().toString();
         String detail = detailText.getText().toString();
         String price = priceText.getText().toString();
 
         View focusView = null;
-
-        if (TextUtils.isEmpty(title)) {
-            titleText.setError(getString(R.string.error_field_required));
-            focusView = titleText;
-            focusView.requestFocus();
-            return;
-        }
 
         if (TextUtils.isEmpty(detail)) {
             detailText.setError(getString(R.string.error_field_required));
@@ -107,7 +97,7 @@ public class NewPostActivity extends ActionBarActivity {
 
         ItemProxy itemProxy = new ItemProxy();
         Item item = itemProxy.build();
-        item.setCategaryId(1).setDetails(detail).setPrice(Integer.getInteger(price)).setTitle(title);
+        item.setCategaryId(1).setDetails(detail).setPrice(Integer.getInteger(price));
         CreateNewItemTask createNewItemTask = new CreateNewItemTask(item);
         createNewItemTask.execute();
     }

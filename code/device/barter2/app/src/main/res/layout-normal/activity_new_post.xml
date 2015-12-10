@@ -60,30 +60,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Title:"
-        android:id="@+id/textView6"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/title"
-        android:hint="Enter Your Title"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/textView6"
-        android:layout_toEndOf="@+id/textView6" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Description:"
         android:id="@+id/textView7"
-        android:layout_below="@+id/textView6"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true" />
 
     <EditText
         android:layout_width="wrap_content"
