@@ -1,0 +1,17 @@
+mysql -u root -p123456 barter
+
+create database barter;
+
+CREATE TABLE IF NOT EXISTS barter.USER(ID INTEGER NOT NULL AUTO_INCREMENT, NAME TEXT, PASSWORD TEXT, PHONE TEXT, EMAIL TEXT, PRIMARY KEY (id));
+
+INSERT INTO USER (ID, NAME, PASSWORD, PHONE, EMAIL)
+VALUES (1, 'nan', '111111', "123-456-123", '@');
+
+SELECT * FROM USER WHERE NAME = 'nan' AND PASSWORD = '111111';
+
+
+
+
+nan: LoginActivity, SignupActivity, MyAccountActivity
+chao: NewPostActivity, EditMyPostActivity, MyPost
+xinghao: HomePageActivity, SearchResultActivity, DetailsActivity
