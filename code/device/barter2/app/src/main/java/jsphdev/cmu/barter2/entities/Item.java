@@ -16,6 +16,13 @@ public class Item implements Serializable {
         return this;
     }
 
+    public String getTitle() { return title; }
+
+    public Item setTitle(String title) {
+        this.title = title;
+        return this;
+    }
+
     public Integer getCategaryId() {
         return categaryId;
     }
@@ -69,6 +76,7 @@ public class Item implements Serializable {
     }
 
     private Integer id;
+    private String title;
     private Integer categaryId;
     private Integer price;
     private Integer sellerId;
