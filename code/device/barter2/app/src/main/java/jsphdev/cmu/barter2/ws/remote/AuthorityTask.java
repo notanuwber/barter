@@ -7,7 +7,7 @@ import jsphdev.cmu.barter2.ui.LoginActivity;
 import jsphdev.cmu.barter2.utility.Logger;
 
 
-public class AuthorityTask extends AsyncTask<Void, Void, String> {
+public class AuthorityTask extends AsyncTask<Void, Void, User> {
     public AuthorityTask(LoginActivity activity, User user) {
         this.logger = new Logger(this.getClass().getName());
         this.activity = activity;
@@ -15,21 +15,30 @@ public class AuthorityTask extends AsyncTask<Void, Void, String> {
     }
 
     @Override
-    protected String doInBackground(Void... params) {
+    protected User doInBackground(Void... params) {
         SocketClient client = new SocketClient();
 
         client.request(SocketClientConstants.AUTHORITY);
         client.sendObject(user);
-        String result = (String) client.getResult();
+        User result = (User) client.getResult();
 
         client.close();
         return result;
     }
 
     @Override
-    protected void onPostExecute(String result) {
-        logger.log(result);
+    protected void onPostExecute(User user) {
+        if (user == null)
+        {
+            logger.log("authority fail");
+            activity.finish();
+            return;
+        }
+
+        logger.log("authority ok");
+        // update sqlite with the user info from server
         activity.finish();
+        return;
     }
 
     private Logger logger;

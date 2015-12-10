@@ -6,12 +6,14 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import jsphdev.cmu.barter2.adapter.userProxy.UserProxy;
 import jsphdev.cmu.barter2.entities.User;
 import jsphdev.cmu.barter2.utility.Logger;
 
 public class SocketServer extends Thread implements SocketServerConstants, SocketServerInterface {
   public SocketServer() {
     logger = new Logger(this.getClass().getName());
+    userProxy = new UserProxy();
   }
 
   public void init() {
@@ -52,7 +54,8 @@ public class SocketServer extends Thread implements SocketServerConstants, Socke
       case AUTHORITY:
         logger.log("get AUTHORITY request");
         User user = (User) reader.readObject();
-        writer.writeObject("OK");
+        User userInDb = userProxy.authoritize(user.getEmail(), user.getPassword());
+        writer.writeObject(userInDb);
         break;
 
       case GET_LIST_BY_KEY_WORD:
@@ -80,18 +83,16 @@ public class SocketServer extends Thread implements SocketServerConstants, Socke
         break;
       }
     } catch (ClassNotFoundException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     } catch (IOException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }
 
   public boolean accept() {
-    if (client != null && !client.isClosed()) {
-      return true;
-    }
+//    if (client != null && !client.isClosed()) {
+//      return true;
+//    }
 
     try {
       client = server.accept();
@@ -131,4 +132,5 @@ public class SocketServer extends Thread implements SocketServerConstants, Socke
   private ObjectOutputStream writer;
   private ServerSocket server;
   private Socket client;
+  private UserProxy userProxy;
 }
