@@ -2,10 +2,10 @@ package jsphdev.cmu.barter2.adapter.itemProxy;
 
 import jsphdev.cmu.barter2.entities.Item;
 
-public class AbstractItemProxy implements jsphdev.cmu.barter2.adapter.itemProxy.ItemBuilder {
+public class AbstractItemProxy implements ItemBuilder {
 
     @Override
     public Item build() {
-        return null;
+        return new Item();
     }
 }

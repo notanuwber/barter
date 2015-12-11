@@ -2,34 +2,47 @@
 package jsphdev.cmu.barter2.ui;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Button;
-
-import android.view.MotionEvent;
-import android.gesture.Gesture;
-import android.widget.EditText;
-
-import android.view.GestureDetector.*;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import jsphdev.cmu.barter2.R;
+import jsphdev.cmu.barter2.entities.Item;
 
 public class DetailActivity extends ActionBarActivity
         implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
-    //   private EditText searchText;
-    private TextView textView;
-    private GestureDetectorCompat gestureDetector;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        init();
+        registerClickListener();
+        display();
+
+        this.gestureDetector = new GestureDetectorCompat(this, this);
+        gestureDetector.setOnDoubleTapListener(this);
+    }
+
+    private void init() {
+        imageView = (ImageView)findViewById(R.id.imageInDetail);
+        descriptionTextView = (TextView)findViewById(R.id.descriptionInDetail);
+        sellerTextView = (TextView)findViewById(R.id.sellerInDetail);
+        phoneTextView = (TextView)findViewById(R.id.phoneInDetail);
+        priceTextView = (TextView)findViewById(R.id.priceInDetail);
+
+        item = (Item) this.getIntent().getSerializableExtra(Item.class.getName());
+    }
+
+    private void registerClickListener() {
         Button myAccountButton = (Button) findViewById(R.id.myAccount);
         myAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,12 +60,15 @@ public class DetailActivity extends ActionBarActivity
                 startActivity(submit);
             }
         });
-        //      searchText = (EditText)findViewById(R.id.search);
-        textView = (TextView)findViewById(R.id.textView8);
+    }
 
-        this.gestureDetector = new GestureDetectorCompat(this, this);
-        gestureDetector.setOnDoubleTapListener(this);
-
+    private void display() {
+        Bitmap bitmap = BitmapFactory.decodeByteArray(item.getImage(), 0, item.getImage().length);
+        imageView.setImageBitmap(bitmap);
+        descriptionTextView.setText(item.getDescription());
+        sellerTextView.setText(item.getSeller());
+        phoneTextView.setText(item.getPhone());
+        priceTextView.setText(item.getPrice().toString());
     }
 
     ///////// Begin Gestures /////////
@@ -85,7 +101,7 @@ public class DetailActivity extends ActionBarActivity
 
     @Override
     public void onShowPress(MotionEvent e) {
-        textView.setText(e.toString());
+        descriptionTextView.setText(e.toString());
     }
 
     @Override
@@ -103,7 +119,7 @@ public class DetailActivity extends ActionBarActivity
 
     @Override
     public void onLongPress(MotionEvent e) {
-        textView.setText(e.toString());
+        descriptionTextView.setText(e.toString());
     }
 
     @Override
@@ -123,4 +139,12 @@ public class DetailActivity extends ActionBarActivity
         return true;
     }
     ///////// End Gestures /////////
+
+    private Item item;
+    private ImageView imageView;
+    private TextView descriptionTextView;
+    private TextView sellerTextView;
+    private TextView phoneTextView;
+    private TextView priceTextView;
+    private GestureDetectorCompat gestureDetector;
 }

@@ -48,7 +48,7 @@ public class EditMyPostActivity extends ActionBarActivity {
     }
 
     public void update() {
-        Item item = new ItemProxy().build().setCategaryId(1).setDetails("details").setPrice(100).setPrice(100);
+        Item item = new ItemProxy().build().setCategory("category").setDescription("Description").setPrice(100);
         UpdateItemTask updateItemTask = new UpdateItemTask(item);
         updateItemTask.execute();
     }

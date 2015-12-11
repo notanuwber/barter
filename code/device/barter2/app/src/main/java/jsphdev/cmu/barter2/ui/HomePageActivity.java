@@ -4,46 +4,60 @@ package jsphdev.cmu.barter2.ui;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import android.view.MotionEvent;
-import android.gesture.Gesture;
-import android.widget.TextView;
-
-import static android.view.GestureDetector.*;
-
 import jsphdev.cmu.barter2.R;
+import jsphdev.cmu.barter2.adapter.itemProxy.ItemListProxy;
+import jsphdev.cmu.barter2.database.DbHelper;
+import jsphdev.cmu.barter2.entities.Item;
+import jsphdev.cmu.barter2.entities.ItemList;
 
 public class HomePageActivity extends ActionBarActivity
-        implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
-    private static ImageView imgView1;
-    private static ImageView imgView2;
-    private static ImageView imgView3;
-    private static ImageView imgView4;
-    private GestureDetectorCompat gestureDetector;
-    private EditText searchText;
-    private boolean isShown = false;
-
+        implements View.OnClickListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
+        init();
+        registerClickListener();
+
+        list = getItemListFromDb();
+        displayImages();
+
+        this.gestureDetector = new GestureDetectorCompat(this, this);
+        gestureDetector.setOnDoubleTapListener(this);
+    }
+
+    private void init() {
+        dbHelper = new DbHelper(getApplicationContext());
+        searchText = (EditText) findViewById(R.id.search);
+        imgView0 = (ImageView)findViewById(R.id.imageView);
+        imgView1 = (ImageView)findViewById(R.id.imageView2);
+        imgView2 = (ImageView)findViewById(R.id.imageView3);
+        imgView3 = (ImageView)findViewById(R.id.imageView4);
+    }
+
+    private ItemList getItemListFromDb() {
+        return dbHelper.getAllItems();
+    }
+
+    private void registerClickListener() {
         Button myAccountButton = (Button) findViewById(R.id.myAccount);
         myAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent submit = new Intent(view.getContext(), MyAccountActivity.class);
-                startActivity(submit);
+                Intent intent = new Intent(view.getContext(), MyAccountActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -56,97 +70,29 @@ public class HomePageActivity extends ActionBarActivity
             }
         });
 
-
-        searchText = (EditText) findViewById(R.id.search);
-
-        OnClickButtonListener();
-        this.gestureDetector = new GestureDetectorCompat(this, this);
-        gestureDetector.setOnDoubleTapListener(this);
-
+        OnClickImageListener();
     }
 
-    public void OnClickButtonListener() {
-        imgView1 = (ImageView)findViewById(R.id.imageView);
-        imgView1.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                 //       String description = getResources().getString(R.string.detail_description);
-                 //       String.format(description, "A good hammer that can use everywhere!");
-                        setContentView(R.layout.activity_detail);
-                        String description = "A good hammer that can use everywhere!";
-                        TextView temp = (TextView)findViewById(R.id.textView8);
-                        temp.setText(description);
+    private void OnClickImageListener() {
+        imgView0.setOnClickListener(this);
+        imgView1.setOnClickListener(this);
+        imgView2.setOnClickListener(this);
+        imgView3.setOnClickListener(this);
+    }
 
-                        ImageView img = (ImageView)findViewById(R.id.imageView5);
-                        Bitmap bm = BitmapFactory.decodeResource(getResources(),R.mipmap.hammer);
-                        img.setImageBitmap(bm);
-                 //       Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
-                 //       startActivity(intent);
-                    }
-                }
-        );
-        imgView2 = (ImageView)findViewById(R.id.imageView2);
-        imgView2.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                    //    String description = getResources().getString(R.string.detail_description);
-                    //    String.format(description, "This Book is 8/10 new, wanting to exchange with a cat");
-                    //    Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
-                    //    startActivity(intent);
-                        setContentView(R.layout.activity_detail);
-                        String description = "This Book is 7/10 new, Wanting to exchange with a cat";
-                        TextView temp = (TextView)findViewById(R.id.textView8);
-                        temp.setText(description);
+    private void displayImages() {
+        displayImageView(imgView0);
+        displayImageView(imgView1);
+        displayImageView(imgView2);
+        displayImageView(imgView3);
+    }
 
-                        ImageView img = (ImageView)findViewById(R.id.imageView5);
-                        Bitmap bm = BitmapFactory.decodeResource(getResources(),R.mipmap.book);
-                        img.setImageBitmap(bm);
-                    }
-                }
-        );
-        imgView3 = (ImageView)findViewById(R.id.imageView3);
-        imgView3.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                    //    String description = getResources().getString(R.string.detail_description);
-                    //    String.format(description, "Comfortable chair want to exchange comfortable bed");
-                        setContentView(R.layout.activity_detail);
-                        String description = "Comfortable chair want to exchange comfortable bed";
-                        TextView temp = (TextView)findViewById(R.id.textView8);
-                        temp.setText(description);
+    private void displayImageView(View view) {
+        Integer index = getViewIndex(view.getId());
+        Item item = list.getItems().get(index);
 
-                        ImageView img = (ImageView)findViewById(R.id.imageView5);
-                        Bitmap bm = BitmapFactory.decodeResource(getResources(),R.mipmap.chair);
-                        img.setImageBitmap(bm);
-                    //    Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
-                    //    startActivity(intent);
-                    }
-                }
-        );
-        imgView4 = (ImageView)findViewById(R.id.imageView4);
-        imgView4.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                     //   String description = getResources().getString(R.string.detail_description);
-                     //   String.format(description, "Just buy a new Iphone 6s, want to exchange the old phone with anything look OK");
-                        setContentView(R.layout.activity_detail);
-                        String description = "Just buy a new Iphone 6s, want to exchange the old phone with anything look OK";
-                        TextView temp = (TextView)findViewById(R.id.textView8);
-                        temp.setText(description);
-
-                        ImageView img = (ImageView)findViewById(R.id.imageView5);
-                        Bitmap bm = BitmapFactory.decodeResource(getResources(),R.mipmap.phone);
-                        img.setImageBitmap(bm);
-                    //    Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
-                    //    startActivity(intent);
-                    }
-                }
-        );
-
+        Bitmap bm = BitmapFactory.decodeByteArray(item.getImage(), 0, item.getImage().length);
+        ((ImageView) view).setImageBitmap(bm);
     }
 
     ///////// Begin Gestures /////////
@@ -215,7 +161,37 @@ public class HomePageActivity extends ActionBarActivity
         }
         return true;
     }
-    ///////// End Gestures /////////
 
+    @Override
+    public void onClick(View view) {
+        Integer index = getViewIndex(view.getId());
+        Item item = list.getItems().get(index);
 
+        Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+        intent.putExtra(Item.class.getName(), item);
+        startActivity(intent);
+    }
+
+    private Integer getViewIndex(Integer id) {
+        if (id == R.id.imageView) {
+            return 0;
+        } else if (id == R.id.imageView2) {
+            return 1;
+        } else if (id == R.id.imageView3) {
+            return 2;
+        } else {
+            return 3;
+        }
+    }
+
+    private static ImageView imgView0;
+    private static ImageView imgView1;
+    private static ImageView imgView2;
+    private static ImageView imgView3;
+    private GestureDetectorCompat gestureDetector;
+    private EditText searchText;
+    private boolean isShown = false;
+    private ItemList list;
+    private ItemListProxy itemListProxy;
+    private DbHelper dbHelper;
 }

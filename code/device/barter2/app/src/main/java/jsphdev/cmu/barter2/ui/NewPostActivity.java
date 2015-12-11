@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import jsphdev.cmu.barter2.R;
 import jsphdev.cmu.barter2.adapter.itemProxy.ItemProxy;
+import jsphdev.cmu.barter2.database.DbHelper;
 import jsphdev.cmu.barter2.entities.Item;
 import jsphdev.cmu.barter2.ws.remote.CreateNewItemTask;
 
@@ -23,6 +24,16 @@ public class NewPostActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_post);
 
+        init();
+        registerClickListener();
+    }
+
+    private void init() {
+        detailText = (EditText) findViewById(R.id.description);
+        priceText = (EditText) findViewById(R.id.price);
+    }
+
+    private void registerClickListener() {
         Button myAccountButton = (Button) findViewById(R.id.myAccount);
         myAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,10 +52,6 @@ public class NewPostActivity extends ActionBarActivity {
             }
         });
 
-
-
-        EditText searchText = (EditText) findViewById(R.id.search);
-
         Button uploadImageButton = (Button) findViewById(R.id.upload_Image);
         uploadImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,9 +59,6 @@ public class NewPostActivity extends ActionBarActivity {
                 // TODO: design needed reaction here
             }
         });
-
-        detailText = (EditText) findViewById(R.id.description);
-        priceText = (EditText) findViewById(R.id.price);
 
         Button submitButton = (Button) findViewById(R.id.submit);
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -66,8 +70,7 @@ public class NewPostActivity extends ActionBarActivity {
         });
     }
 
-    public void post() {
-
+    private void post() {
         String detail = detailText.getText().toString();
         String price = priceText.getText().toString();
 
@@ -87,27 +90,37 @@ public class NewPostActivity extends ActionBarActivity {
             return;
         }
 
-        if (not_a_number(price)) {
+        if (!isNumeric(price)) {
             priceText.setError("This is not a integer. Please type a new one.");
             focusView = priceText;
             focusView.requestFocus();
             return;
         }
 
-
         ItemProxy itemProxy = new ItemProxy();
         Item item = itemProxy.build();
-        item.setCategaryId(1).setDetails(detail).setPrice(Integer.getInteger(price));
-        CreateNewItemTask createNewItemTask = new CreateNewItemTask(item);
+        item.setCategory("").setDescription(detail).setPrice(Integer.getInteger(price));
+
+        storeInLocal(item);
+
+        CreateNewItemTask createNewItemTask = new CreateNewItemTask(NewPostActivity.this, item);
         createNewItemTask.execute();
     }
 
-    public boolean not_a_number(String s){
-        int length = s.length();
-        for(int i = 0; i < length; i++){
-            char a = s.charAt(i);
-            if(a < '0' || a > '9')
-                return false;
+    private void storeInLocal(Item item) {
+        DbHelper db = new DbHelper(getApplicationContext());
+        db.insert(item);
+    }
+
+    public static boolean isNumeric(String input)
+    {
+        try
+        {
+            Integer i = Integer.parseInt(input);
+        }
+        catch(NumberFormatException e)
+        {
+            return false;
         }
         return true;
     }

@@ -33,27 +33,9 @@ public class MyPostActivity extends ActionBarActivity {
             return;
         }
 
-        Button myAccountButton = (Button) findViewById(R.id.myAccount);
-        myAccountButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent submit = new Intent(view.getContext(), MyAccountActivity.class);
-                startActivity(submit);
-            }
-        });
-
-        Button myPostButton = (Button) findViewById(R.id.myPost);
-        myPostButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent submit = new Intent(view.getContext(), MyPostActivity.class);
-                startActivity(submit);
-            }
-        });
-
         EditText title = (EditText) findViewById(R.id.title);
-        //EditText description = (EditText) findViewById(R.id.description);
-        OnClickButtonListener();
+
+        registerClickListener();
     }
 
     public void getPosts() {
@@ -64,7 +46,25 @@ public class MyPostActivity extends ActionBarActivity {
         getUserPostsTask.execute();
     }
 
-    public void OnClickButtonListener() {
+    public void registerClickListener() {
+        Button myAccountButton = (Button) findViewById(R.id.myAccount);
+        myAccountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent submit = new Intent(view.getContext(), MyAccountActivity.class);
+                startActivity(submit);
+            }
+        });
+
+        Button newPostButton = (Button) findViewById(R.id.newPostInMyPosts);
+        newPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent submit = new Intent(view.getContext(), NewPostActivity.class);
+                startActivity(submit);
+            }
+        });
+
         imgView = (ImageView)findViewById(R.id.imageView);
         imgView.setOnClickListener(
                 new View.OnClickListener() {

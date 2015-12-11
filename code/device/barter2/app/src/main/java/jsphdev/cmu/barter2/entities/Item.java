@@ -16,12 +16,12 @@ public class Item implements Serializable {
         return this;
     }
 
-    public Integer getCategaryId() {
-        return categaryId;
+    public String getCategory() {
+        return category;
     }
 
-    public Item setCategaryId(Integer categaryId) {
-        this.categaryId = categaryId;
+    public Item setCategory(String category) {
+        this.category = category;
         return this;
     }
 
@@ -34,45 +34,47 @@ public class Item implements Serializable {
         return this;
     }
 
-    public Integer getSellerId() {
-        return sellerId;
+    public String getSeller() {
+        return seller;
     }
 
-    public Item setSellerId(Integer sellerId) {
-        this.sellerId = sellerId;
+    public Item setSeller(String seller) {
+        this.seller = seller;
         return this;
     }
 
-    public String getDetails() {
-        return details;
+    public String getDescription() {
+        return description;
     }
 
-    public Item setDetails(String details) {
-        this.details = details;
+    public Item setDescription(String details) {
+        this.description = details;
         return this;
     }
 
-    public byte[] getImage_1() {
-        return image_1;
+    public byte[] getImage() {
+        return image;
     }
 
-    public void setImage_1(byte[] image_1) {
-        this.image_1 = image_1;
+    public Item setImage(byte[] image) {
+        this.image = image;
+        return this;
     }
 
-    public byte[] getImage_2() {
-        return image_2;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setImage_2(byte[] image_2) {
-        this.image_2 = image_2;
+    public Item setPhone(String phone) {
+        this.phone = phone;
+        return this;
     }
 
     private Integer id;
-    private Integer categaryId;
+    private String description;
+    private byte[] image;
+    private String category;
     private Integer price;
-    private Integer sellerId;
-    private String details;
-    private byte[] image_1;
-    private byte[] image_2;
+    private String seller;
+    private String phone;
 }

@@ -1,5 +1,7 @@
 package jsphdev.cmu.barter2.adapter.categoryProxy;
 
-public interface CategoryBuilder {
+import jsphdev.cmu.barter2.entities.Category;
 
+public interface CategoryBuilder {
+    public Category build();
 }
